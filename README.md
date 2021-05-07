@@ -14,6 +14,8 @@ A "container light" implementation for C
 
 - [ ] Array 
 - [ ] Vector
+- [ ] Queue
+- [ ] Stack
 - [ ] Single Linked List
 - [ ] Double Linked List
 - [ ] Ordered Map (BST)
