@@ -18,6 +18,8 @@ A "container light" implementation for C
 - [ ] Stack
 - [ ] Single Linked List
 - [ ] Double Linked List
+- [ ] Set
+- [ ] Priority Queue
 - [ ] Ordered Map (BST)
   - [ ] Balanced Ordered Map (Red Black Tree)
   - [ ] Multi map
