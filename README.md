@@ -8,6 +8,54 @@ Container library for C.
 
 Through macros "type safe" container accessors/modifiers can be generated.  However they currently come at the cost of an extra re-direct.
 
+**Under Construction**
+
+This project is still in early phases of development.  The API can (and will) change, and more containers will be added as time allows.
+
+## Example
+
+```c
+#include "cstore/vector.h"
+
+typedef struct foo_t {
+    int bar;
+} foo;
+
+CREATE_VECTOR_FUNCS(foo);
+int main() {
+    vector v = new_heap_vector_foo();
+    
+    for(int i = 0; i < 10; ++i) {
+        foo* f = vector_push_back(&v, NULL);
+        f->bar = i;
+    }
+
+    for(int i = 0; i < 10; ++i) {
+        foo* f = vector_at(&v, i);
+        printf("%d\n", f->bar);
+    }
+    vector_delete(&v);
+}
+```
+
+Using user provided memory:
+
+```c
+int buffer[128]
+int capacity = sizeof(buffer) / sizeof(foo);
+vector v = new_vector_foo(capacity, buffer);
+
+for(int i = 0; i < 10; ++i) {
+    foo* f = vector_push_back(&v, NULL);
+    f->bar = i;
+}
+
+for(int i = 0; i < 10; ++i) {
+    foo* f = vector_at(&v, i);
+    printf("%d\n", f->bar);
+}
+```
+
 ## Goals
 
 - Minimal binary footprint
