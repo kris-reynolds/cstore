@@ -1,4 +1,7 @@
 # cstore
+
+[![CI](https://github.com/kris-reynolds/cstore/actions/workflows/test.yml/badge.svg)](https://github.com/kris-reynolds/cstore/actions/workflows/test.yml)
+
 A "container light" implementation for C
 
 
