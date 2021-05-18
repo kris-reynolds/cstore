@@ -1,7 +1,6 @@
 #ifndef CSTORE_VECTOR_H
-#define CSTORE_VECTOR_H 1
+#define CSTORE_VECTOR_H
 
-#include <stdbool.h>
 
 #ifndef NULL
 #define NULL 0
@@ -15,7 +14,7 @@ typedef struct vector_t {
    unsigned int element_size;
    unsigned int capacity;
    unsigned int size;
-   bool internal_memory;
+   int internal_memory;
 } vector;
 
 
@@ -45,7 +44,7 @@ void* vector_back(vector* v);
 void* vector_data(vector *v);
 
 // Capacity
-bool vector_empty(vector * v);
+int vector_empty(vector * v);
 void vector_reserve(vector* v, unsigned int new_cap, void* resource);
 void vector_heap_reserve(vector* v, unsigned int new_cap);
 unsigned int vector_capacity(vector *v);
@@ -55,12 +54,12 @@ void vector_shrink_to_fit(vector *v);
 void vector_clear(vector* v);
 void* vector_push_back(vector*v, void* element);
 
-bool vector_erase_range(vector* v, void* start_element, void* end_element);
-bool vector_erase(vector* v, void* element);
-bool vector_erase_index_range(vector* v, unsigned int start_index, unsigned int end_index);
-bool vector_erase_index(vector* v, unsigned int index);
+int vector_erase_range(vector* v, void* start_element, void* end_element);
+int vector_erase(vector* v, void* element);
+int vector_erase_index_range(vector* v, unsigned int start_index, unsigned int end_index);
+int vector_erase_index(vector* v, unsigned int index);
 
-bool vector_pop_back(vector* v);
+int vector_pop_back(vector* v);
 
 void vector_delete(vector*v);
 

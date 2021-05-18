@@ -2,7 +2,6 @@
 #include "cstore/vector.h"
 
 #include <assert.h>
-#include <stdint.h>
 #include <stdlib.h>
 #include <string.h> // memcpy/memmove
 
@@ -19,11 +18,11 @@ vector new_vector(
 
    if(!resource) {
       v.resource = malloc(element_size * max_elements);
-      v.internal_memory = true;
+      v.internal_memory = 1;
    }
    else {
       v.resource = resource;
-      v.internal_memory = false;
+      v.internal_memory = 0;
    }
    return v;
 }
@@ -38,7 +37,7 @@ void* vector_at(vector* v, unsigned int index) {
    if(index > v->size) {
       return NULL;
    }
-   return (uint8_t*)v->resource + (index * v->element_size);
+   return (unsigned char*)v->resource + (index * v->element_size);
 }
 
 
@@ -54,7 +53,7 @@ void* vector_back(vector* v) {
    if(v->size == 0) {
       return NULL;
    }
-   return (uint8_t*)v->resource + ((v->size-1) * v->element_size);
+   return (unsigned char*)v->resource + ((v->size-1) * v->element_size);
 }
 
 
@@ -63,7 +62,7 @@ void* vector_data(vector *v) {
 }
 
 
-bool vector_empty(vector * v) {
+int vector_empty(vector * v) {
    return v->size == 0;
 }
 
@@ -84,7 +83,7 @@ void vector_reserve(vector* v, unsigned int new_cap, void* resource) {
       free(old_resource);
    }
    v->capacity = new_cap;
-   v->internal_memory = resource ? false : true;
+   v->internal_memory = resource ? 0 : 1;
 }
 
 
@@ -113,7 +112,7 @@ void* vector_push_back(vector* v, void* element) {
    //    If it is internally managed then reserve to the next size up
    if(v->size == v->capacity) {
       // We don't control the memory, so we can't expand the capacity
-      if(false == v->internal_memory) {
+      if(0 == v->internal_memory) {
          return NULL;
       }
       vector_heap_reserve(v, v->capacity * CAPACITY_EXPANSION_MULTIPLIER);
@@ -123,10 +122,10 @@ void* vector_push_back(vector* v, void* element) {
    // Once there is enough space, copy the element if provided
    //  else, provide an non-initialized value
    if(NULL != element) {
-      result = memmove((uint8_t*)v->resource + v->element_size * v->size, element, v->element_size);
+      result = memmove((unsigned char*)v->resource + v->element_size * v->size, element, v->element_size);
    }
    else {
-      result = (uint8_t*)v->resource + v->element_size * v->size;
+      result = (unsigned char*)v->resource + v->element_size * v->size;
    }
 
    if(NULL != result) {
@@ -137,7 +136,7 @@ void* vector_push_back(vector* v, void* element) {
 }
 
 
-bool vector_erase_range(vector* v, void* start_element, void* end_element) {
+int vector_erase_range(vector* v, void* start_element, void* end_element) {
    // Verify the elements we are erasing are part of this vector
    assert(start_element >= v->resource && start_element < (v->resource + (v->capacity * v->element_size)));
    assert(end_element >= v->resource && end_element < (v->resource + (v->capacity * v->end_element)));
@@ -145,11 +144,11 @@ bool vector_erase_range(vector* v, void* start_element, void* end_element) {
    assert((start_element - end_element) % v->element_size == 0);
 
    // Get the total size of the span
-   unsigned int num_elements_to_delete = ((uint8_t*)start_element - (uint8_t*)end_element + v->element_size) / v->element_size;
+   unsigned int num_elements_to_delete = ((unsigned char*)start_element - (unsigned char*)end_element + v->element_size) / v->element_size;
 
    // The elements remaining (if any) after the section to erase
-   void* first_kept_point = (uint8_t*)end_element + v->element_size;
-   unsigned int index_of_first_kept = ((uint8_t*)first_kept_point - (uint8_t*)v->resource) / v->element_size;
+   void* first_kept_point = (unsigned char*)end_element + v->element_size;
+   unsigned int index_of_first_kept = ((unsigned char*)first_kept_point - (unsigned char*)v->resource) / v->element_size;
 
    // We know the index of the first
    unsigned int num_elem_to_move = v->size - (index_of_first_kept - 1);
@@ -166,30 +165,30 @@ bool vector_erase_range(vector* v, void* start_element, void* end_element) {
 }
 
 
-bool vector_erase(vector* v, void* element) {
+int vector_erase(vector* v, void* element) {
    return vector_erase_range(v, element, element);
 }
 
 
-bool vector_erase_index_range(vector* v, unsigned int start_index, unsigned int end_index) {
+int vector_erase_index_range(vector* v, unsigned int start_index, unsigned int end_index) {
    return vector_erase_range(
       v,
-      (uint8_t*)v->resource + (start_index * v->element_size),
-      (uint8_t*)v->resource + (end_index * v->element_size));
+      (unsigned char*)v->resource + (start_index * v->element_size),
+      (unsigned char*)v->resource + (end_index * v->element_size));
 }
 
 
-bool vector_erase_index(vector* v, unsigned int index) {
+int vector_erase_index(vector* v, unsigned int index) {
    return vector_erase_index_range(v, index, index);
 }
 
 
-bool vector_pop_back(vector* v) {
+int vector_pop_back(vector* v) {
    if(v->size > 0) {
       v->size--;
-      return true;
+      return 1;
    }
-   return false;
+   return 0;
 }
 
 void vector_delete(vector* v) {
