@@ -18,8 +18,8 @@ typedef struct {
    unsigned int element_size;
    unsigned int capacity;
    unsigned int size;
-   unsigned int front;
-   unsigned int back;
+   int front;
+   int back;
    int internal_memory;
 } ring_buffer;
 
@@ -62,7 +62,7 @@ void* ring_buffer_back(ring_buffer* buf);
 ///
 /// @param element
 /// @return int
-int ring_buffer_push(ring_buffer* buf, void* element);
+void* ring_buffer_push(ring_buffer* buf, void* element);
 
 /// @brief Add a new element to the ring,
 ///  and return a pointer so it can be populated
