@@ -10,7 +10,7 @@ Through macros "type safe" container accessors/modifiers can be generated.  Howe
 
 **Under Construction**
 
-This project is still in early phases of development.  The API can (and will) change, and more containers will be added as time allows.
+This project is still in early phases of development.  The API can (and will) change, and more containers will be added as time allows.  Unit tests with reasonable coverage should be added before you can use any of these containers with confidence.
 
 ## Example
 
@@ -24,7 +24,7 @@ typedef struct foo_t {
 CREATE_VECTOR_FUNCS(foo);
 int main() {
     vector v = new_heap_vector_foo();
-    
+
     for(int i = 0; i < 10; ++i) {
         foo* f = vector_push_back(&v, NULL);
         f->bar = i;
@@ -73,14 +73,13 @@ for(int i = 0; i < 10; ++i) {
 
 ### Containers
 
-- [ ] Array
-- [ ] Vector
-- [ ] Queue
+- [x] Vector
+- [x] Ring Buffer
 - [ ] Stack
-- [ ] Single Linked List
-- [ ] Double Linked List
-- [ ] Set
+- [x] Single Linked List
+- [ ] Set (BST)
 - [ ] Priority Queue
+- [ ] Memory Pool (Supporting)
 - [ ] Ordered Map (BST)
   - [ ] Balanced Ordered Map (Red Black Tree)
   - [ ] Multi map
