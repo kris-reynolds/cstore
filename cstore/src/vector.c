@@ -56,17 +56,6 @@ void* vector_back(vector* v) {
    return (unsigned char*)v->resource + ((v->size-1) * v->element_size);
 }
 
-
-void* vector_data(vector *v) {
-   return v->resource;
-}
-
-
-int vector_empty(vector * v) {
-   return v->size == 0;
-}
-
-
 void vector_reserve(vector* v, unsigned int new_cap, void* resource) {
    if(new_cap <= v->capacity) {
       return;
@@ -89,11 +78,6 @@ void vector_reserve(vector* v, unsigned int new_cap, void* resource) {
 
 void vector_heap_reserve(vector* v, unsigned int new_cap) {
    vector_reserve(v, new_cap, NULL);
-}
-
-
-unsigned int vector_capacity(vector *v) {
-   return v->capacity;
 }
 
 

@@ -29,10 +29,6 @@ void initialize_a_vector(void) {
     TEST_ASSERT_EQUAL_UINT32(v.size, 0);
     TEST_ASSERT_TRUE(v.internal_memory);
 
-    // Capacity checks at initialization
-    TEST_ASSERT_TRUE(vector_empty(&v));
-    TEST_ASSERT_EQUAL_UINT32(vector_capacity(&v), 10);
-
     vector_delete(&v);
 }
 
