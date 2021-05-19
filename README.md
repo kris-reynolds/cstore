@@ -89,3 +89,4 @@ for(int i = 0; i < 10; ++i) {
 ## Misc
 
 - [ ] Figure out how to have the typed macro-defined functions be in-lined.
+- [ ] The pool/resource/malloc approach is starting to feel a little messy.  Rework the "make" functions so it is more clear which approach is being used.

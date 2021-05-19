@@ -34,6 +34,9 @@ typedef struct {
 /// @param max_elements
 /// @param resource - Should be of at least size element_size * max_elements + sizeof(pool)
 /// @return list
+/// TODO: There is a lot of hidden logic based on what is feed in (max elements vs resource)
+///       We should just create a new builder method that allows the input of a pool or
+///       resource.
 list new_linked_list(
    unsigned int element_size,
    unsigned int max_elements,
@@ -48,10 +51,28 @@ list new_linked_list(
 list new_heap_linked_list(
    unsigned int element_size);
 
+/// @brief
+///
+/// @param l
+/// @return void*
 void* linked_list_soft_push_front(list* l);
 
+/// @brief
+///
+/// @param l
+/// @return void*
 void* linked_list_soft_push_back(list* l);
 
+/// @brief
+///
+/// @param l
+/// @param node
+/// @return int
 int linked_list_remove(list* l, ll_node* node);
+
+/// @brief
+///
+/// @param l
+void linked_list_delete(list* l);
 
 #endif // CSTORE_LIST_H

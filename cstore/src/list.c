@@ -81,7 +81,6 @@ int linked_list_remove(list* l, ll_node* node) {
       while(first && second) {
          if(second == node) {
             first->next = second->next;
-
             break;
          }
          first = first->next;
@@ -102,4 +101,21 @@ int linked_list_remove(list* l, ll_node* node) {
    }
 
    return 1;
+}
+
+
+void linked_list_delete(list* l) {
+   while(l->head) {
+      linked_list_remove(l, l->head);
+   }
+
+   if(l->resource) {
+      free(l->resource);
+   }
+
+   l->head = NULL;
+   l->tail = NULL;
+   l->size = 0;
+   l->memory_pool = NULL;
+   l->resource = NULL;
 }

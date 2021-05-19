@@ -1,20 +1,29 @@
 
-BUILD_TYPE ?= RelWithDebInfo
+.PHONY: setup-dev setup-rel all-dev all-rel test
 
-.PHONY: setup
-
-setup:
-	@mkdir -p build
-	cd build && \
+setup-dev:
+	@mkdir -p build/dev
+	cd build/dev && \
 	cmake \
-		-DCMAKE_BUILD_TYPE=${BUILD_TYPE} \
-		-DENABLE_SANITIZER_ADDRESS=FALSE \
-		-DENABLE_SANITIZER_LEAK=FALSE \
-		-DENABLE_SANITIZER_UNDEFINED_BEHAVIOR=FALSE \
-		../
+		-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+		-DENABLE_SANITIZER_ADDRESS=TRUE \
+		-DENABLE_SANITIZER_LEAK=TRUE \
+		-DENABLE_SANITIZER_UNDEFINED_BEHAVIOR=TRUE \
+		../../
 
-all:
-	@cd build && make
+setup-rel:
+	@mkdir -p build/rel
+	cd build/rel && \
+	cmake \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DENABLE_TESTING=OFF \
+		../../
 
-test: all
-	@cd build && ctest
+all-dev:
+	@cd build/dev && make
+
+all-rel:
+	@cd build/rel && make
+
+test: all-dev
+	@cd build/dev && ctest
