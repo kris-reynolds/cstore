@@ -16,5 +16,5 @@ jobs:
 
       - name: Run Tests
         run: |
-          make setup
+          make setup-dev
           make test
